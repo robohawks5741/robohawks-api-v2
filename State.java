@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.api;
 
 public class State {
 
+    // Store gamepad button history (abxy)
     public static class Buttons {
         public boolean a = false;
         public boolean b = false;
@@ -16,6 +17,7 @@ public class State {
         }
     }
 
+    // Store dpad history (udrl)
     public static class Dpad {
         public boolean dpad_up = false;
         public boolean dpad_down = false;
@@ -30,6 +32,7 @@ public class State {
         }
     }
 
+    // Store gamepad bumper history (rl)
     public static class Bumpers {
         public boolean right_bumper = false;
         public boolean left_bumper = false;

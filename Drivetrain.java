@@ -1,6 +1,7 @@
 /*
 Drivetrain Class
 Provides easy control for a Mecanum drivetrain (feel free to modify this if using another system)
+See https://www.notion.so/Drivetrain-3baa071900aa4ff6b7b192b2f50351c3 for documentation
 
 Written by Isaac Krementsov, 12/7/2020
 */
@@ -9,8 +10,10 @@ package org.firstinspires.ftc.teamcode.api;
 
 public class Drivetrain {
 
+    // DcMotors represent each wheel
     public DcMotorX mRF, mLF, mRB, mLB;
 
+    // Initialize a simple drivetrain with wheel motors
     public Drivetrain(DcMotorX mRF, DcMotorX mLF, DcMotorX mRB, DcMotorX mLB){
         this.mRF = mRF;
         this.mLF = mLF;
@@ -21,21 +24,25 @@ public class Drivetrain {
         setBrake(true);
     }
 
+    // Set power to both right wheels
     private void setPowerRight(double power){
         mRF.setPower(power);
         mRB.setPower(power);
     }
 
+    // Set power to both left wheels
     private void setPowerLeft(double power){
         mLF.setPower(power);
         mLB.setPower(power);
     }
 
+    // Set power to all wheels
     private void setPowerAll(double power){
         setPowerRight(power);
         setPowerLeft(power);
     }
 
+    // Reverse all wheel motors
     public void reverse(){
         mRF.reverse();
         mRB.reverse();
@@ -43,15 +50,22 @@ public class Drivetrain {
         mLB.reverse();
     }
 
+    // Reverse left wheel motors
     public void reverseLeft(){
         mLF.reverse();
         mLB.reverse();
     }
 
+    // Base drive method, adjusted for use with gamepad joysticks
     public void driveWithGamepad(double speed, double forward, double yaw, double strafe){
         drive(speed*forward, -speed*yaw, speed*strafe);
     }
 
+    /* Drive in a direction based on
+        - Power: vertical/"forward"/parallel motion
+        - Yaw: rotational motion, positive=counterclockwise
+        - Strafe: horizontal/"sideways"/perpendicular motion
+     */
     public void drive(double power, double yaw, double strafe){
         mRF.setPower(power + yaw - strafe);
         mLF.setPower(power - yaw + strafe);
@@ -59,6 +73,7 @@ public class Drivetrain {
         mLB.setPower(power - yaw - strafe);
     }
 
+    // Drive in one direction
     public void drive(double power, Direction direction){
         switch(direction){
             case FORWARD:
@@ -84,6 +99,7 @@ public class Drivetrain {
         mLB.controlPosition();
     }
 
+    // Drive a set distance in one direction
     public void drive(double power, double distance, Direction direction, boolean blocking) {
         // Set the correct target distances based on drive direction
         switch(direction){
@@ -124,20 +140,15 @@ public class Drivetrain {
         setPowerAll(0);
     }
 
+    // Change brake mode for all motors
     public void setBrake(boolean brake){
-        if(brake){
-            mRF.setBrake(true);
-            mLF.setBrake(true);
-            mRB.setBrake(true);
-            mLB.setBrake(true);
-        }else{
-            mRF.setBrake(false);
-            mLF.setBrake(false);
-            mRB.setBrake(false);
-            mLB.setBrake(false);
-        }
+        mRF.setBrake(brake);
+        mLF.setBrake(brake);
+        mRB.setBrake(brake);
+        mLB.setBrake(brake);
     }
 
+    // Simple direction class, useful for very basic movements
     public static enum Direction {
         FORWARD, BACKWARD, RIGHT, LEFT
     }
