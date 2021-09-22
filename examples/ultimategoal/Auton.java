@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.api.Odometry;
 import org.firstinspires.ftc.teamcode.api.ServoX;
 import org.firstinspires.ftc.teamcode.api.TensorFlowX;
 
-@Autonomous
+//@Autonomous
 public class Auton extends LinearOpMode {
 
     // Odometry parameters
