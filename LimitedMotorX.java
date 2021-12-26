@@ -108,6 +108,29 @@ public class LimitedMotorX extends DcMotorX {
     }
 
     // DcMotorX methods with enforced limits
+    // Note: non-autonomous methods only enforce encoded limits or prevent movement when already at a switch
+
+    public void setPostion(double position, double speed){
+        if (!limitPressed()) {
+           if (positionLimitUpper != null) {
+               if (position >= positionLimitUpper) {
+                   setPosition(positionLimitUpper, speed);
+                   return;
+               }
+           } else if (positionLimitLower != null) {
+               if (position <= positionLimitLower) {
+                   setPosition(positionLimitLower, speed);
+                   return;
+               }
+           }
+
+           setPosition(position, speed);
+        }
+    }
+
+    public void setDistance(double distance, double speed) {
+        setPosition(getPosition() + distance, speed);
+    }
 
     public void goToDistance(double position, double speed){
         if(!core.getMode().equals(DcMotor.RunMode.RUN_TO_POSITION)) controlPosition();
