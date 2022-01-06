@@ -70,6 +70,14 @@ public class LimitedMotorX extends DcMotorX {
         setUpperLimit(limitUpper);
     }
 
+    public void setPower(double power) {
+        if ((power > 0 && !limitUpperPressed()) || (power < 0 && !limitLowerPressed())) {
+            super.setPower(power);
+        } else {
+            super.setPower(0);
+        }
+    }
+
     // Check if either limit is pressed
     public boolean limitPressed(){
         return limitLowerPressed() || limitUpperPressed();
